@@ -14,6 +14,8 @@ import os
 
 ts = datetime.datetime.now().isoformat()
 
+white = "B27001A_008E,B27001A_009E,B27001A_010E,B27001A_011E,B27001A_012E,B27001A_013E,B27001A_014E,B27001A_015E,B27001A_016E"
+black = "B27001B_008E,B27001B_009E,B27001B_010E,B27001B_011E,B27001B_012E,B27001B_013E,B27001B_014E,B27001B_015E,B27001B_016E"
 
 
  #Creating a list of the actual variable names that we are interested in 
@@ -22,7 +24,7 @@ def acs_pull(word):
     ''' Identifying the variable I am interested in regarding African American 
         insurance rates this function grabs from a specified year and appends to an existing dataframe '''
 
-    api = "https://api.census.gov/data/" + str(word)+ "/acs/acs1?get=NAME,B27001A_001E,B27001B_001E,B27001B_008E,B27001B_010E,B27001B_011E,B27001B_013E&for=county:*&in=state:05,48,40,20,29,47,28"
+    api = "https://api.census.gov/data/" + str(word)+ "/acs/acs1?get=NAME,"+str(white)+","+str(black)+"&for=county:*&in=state:05,48,40,20,29,47,28"
 
     print('Requesting data from the American Communities Survey API')
     
@@ -35,7 +37,9 @@ def acs_pull(word):
     
     content = acs_data.json()
     print("Data converted to JSON formatting from ACS")
-    headers= ['County_Name','Total_Whit_Est_Insur' ,'Total_AA_Est_Insur','Age19-25Insur-AA', 'Age19-25Non-AA', 'Age26-34Insur-AA',  'Age26-34Non-AA', 'fips_st', 'fips_cnty']
+    headers= ['County_Name','Total_White_19_25' ,'Total_White_Insur_19_25','Total_White_UnInsur_19_25','Total_White_26_34' ,'Total_White_Insur_26_34','Total_White_UnInsur_26_34',
+              'Total_White_35_44' ,'Total_White_Insur_35_44','Total_White_UnInsur_35_44', 'Total_AA_19_25' ,'Total_AA_Insur_19_25','Total_AA_UnInsur_19_25','Total_AA_26_34' ,
+              'Total_AA_Insur_26_34','Total_AA_UnInsur_26_34','Total_AA_35_44' ,'Total_AA_Insur_35_44','Total_AA_UnInsur_35_44', 'fips_cnty', 'state']
 
     #I am adding the list of headers that will actually define what the different variables are
 
@@ -46,10 +50,10 @@ def acs_pull(word):
     
     print('Pandas dataframe created at ' + str(ts))
     
-    if not os.path.isfile('E:\\Urban League\\insurancedata.csv'):
-        insur.to_csv('E:\\Urban League\\insurancedata.csv', index= True, header='headers' )
+    if not os.path.isfile('Z:\\DATA\\Urban League Project\\Data\\insurancedata.csv'):
+        insur.to_csv('Z:\\DATA\\Urban League Project\\Data\\insurancedata.csv', index= True, header='headers' )
     else:
-        insur.to_csv('E:\\Urban League\\insurancedata.csv', mode= 'a' , header=False )
+        insur.to_csv('Z:\\DATA\\Urban League Project\\Data\\insurancedata.csv', mode= 'a' , header=False )
     print('Appended csv with year ' + str(word) +' to main file at ' + str(ts))
 
 
