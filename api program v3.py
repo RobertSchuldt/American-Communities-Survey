@@ -15,7 +15,7 @@ import os
 ts = datetime.datetime.now().isoformat()
 
 income = "B19013_001E"
-education = "B15003_001E,B23025_001E,B01003_001E"
+education = "B15003_022E,B23025_004E,B01003_001E"
 key1 = "6c64ce11724c4ffd70820041d4f49a8daf53e4b4"
  #Creating a list of the actual variable names that we are interested in 
 
